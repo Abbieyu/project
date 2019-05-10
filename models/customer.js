@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var customerSchema = mongoose.Schema({
+var customerSchema = new mongoose.Schema({
     firstname:{
         type: String
     },
@@ -9,7 +9,8 @@ var customerSchema = mongoose.Schema({
     },
     email:{
         type: String,
-        required: true
+        required: true,
+        unique : true
     },
     password:{
         type: String,
@@ -22,10 +23,17 @@ var customerSchema = mongoose.Schema({
         type: Date
     },
     cart : {
-        type : mongoose.Schema.Types.ObjectId
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Cart'
     },
     admin:{
         type : Boolean,
         default : false
     }
-})
+},
+    {timestamps : true
+});
+
+
+var Customer = mongoose.model('Customer',customerSchema);
+module.exports = Customer;
